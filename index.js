@@ -1,8 +1,9 @@
 const Discord = require('discord.js');
 const fs = require('fs');
+// const ytdl = require('ytdl-core');
 const { prefix, BOT_KEY } = require('./masterKey.js');
 
-const client = new Discord.Client();
+const client = new Discord.Client({ disableEveryone: true });
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 
@@ -14,13 +15,13 @@ commandFiles.forEach((file) => {
 });
 
 client.once('ready', () => {
-  console.log('Ready!');
+  console.log('active');
 });
 
-client.on('message', (message) => {
+client.on('message', async (message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-  const args = message.content.slice(prefix.length).trim().split(/ +/);
+  const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const commandName = args.shift().toLowerCase();
 
   if (!client.commands.has(commandName)) return;
