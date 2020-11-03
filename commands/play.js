@@ -13,7 +13,7 @@ module.exports = {
     if (!permissions.has('SPEAK')) return message.channel.send('needs speak permission');
 
     try {
-      const connection = await voiceChannel.join();
+      var connection = await voiceChannel.join();
     } catch (error) {
       console.log(`error connecting to voice channel: ${error}`);
       return message.channel.send(`error connecting to voice channel ${error}`);
