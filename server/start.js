@@ -1,16 +1,15 @@
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
+const db = require('../postgresql/index.js');
 
 const PUBLIC_DIR = path.resolve(__dirname, '..', 'public');
 const app = express();
-
+app.use(bodyParser.json());
 app.use(express.static(PUBLIC_DIR));
 
-// TODO connection to database
-
-// app.get('/api/pastepoints/:user_id/:karma', (req, res) => {
-//   console.log('user', req.params.user_id, 'amount', req.params.karma);
-//   res.send(200);
-// });
+app.get('/api/users', db.topTen);
+app.post('/api/users/up/:id', db.upsertID);
+app.post('/api/users/down/:id', db.downsertID);
 
 module.exports = app;
